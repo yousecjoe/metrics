@@ -24,7 +24,7 @@ export default function({faker, query, login = faker.internet.userName()}) {
       popular: {
         nodes: [{stargazers: {totalCount: faker.number.int(50000)}}],
       },
-      projects: {totalCount: faker.number.int(100)},
+      projectsV2: {totalCount: faker.number.int(100)},
       packages: {totalCount: faker.number.int(100)},
       membersWithRole: {totalCount: faker.number.int(100)},
       sponsorshipsAsSponsor: {totalCount: faker.number.int(100)},
