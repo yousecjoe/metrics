@@ -1503,7 +1503,8 @@ branding:
 
 # The action will parse its name to check if it's the official action or if it's a forked one
 # On the official action, it'll use the docker image published on GitHub registry when using a released version, allowing faster runs
-# On a forked action, it'll rebuild the docker image from Dockerfile to take into account changes you made
+# On a forked action, it'll use a commit-addressed image from the fork owner's
+# GitHub Container Registry when available, then fall back to a local build.
 runs:
   using: composite
   steps:
@@ -1578,7 +1579,21 @@ runs:
         # Forked action
         else
           echo "Using a forked version"
-          METRICS_IMAGE=metrics:forked-$METRICS_VERSION
+          if [[ ! $METRICS_USE_PREBUILT_IMAGE =~ ^([Ff]alse|[Oo]ff|[Nn]o|0)$ ]]; then
+            if [[ $METRICS_ACTION_REF =~ ^[0-9a-fA-F]{40}$ ]]; then
+              METRICS_TAG=sha-$(echo "$METRICS_ACTION_REF" | tr '[:upper:]' '[:lower:]')
+            else
+              METRICS_TAG=$(echo "$METRICS_ACTION_REF" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9_.-]+/-/g')
+            fi
+            METRICS_IMAGE=ghcr.io/$METRICS_SOURCE/metrics:$METRICS_TAG
+            echo "Using pre-built fork image $METRICS_IMAGE"
+            if ! docker image pull "$METRICS_IMAGE"; then
+              echo "Failed to fetch fork image from GitHub registry, will rebuild it locally"
+              METRICS_IMAGE=metrics:forked-$METRICS_VERSION
+            fi
+          else
+            METRICS_IMAGE=metrics:forked-$METRICS_VERSION
+          fi
         fi
         echo "Image name: $METRICS_IMAGE"
 
@@ -1601,6 +1616,7 @@ runs:
       shell: bash
       env:
         METRICS_ACTION: ${{ github.action }}
+        METRICS_ACTION_REF: ${{ github.action_ref }}
         METRICS_ACTION_PATH: ${{ github.action_path }}
         METRICS_USE_PREBUILT_IMAGE: ${{ inputs.use_prebuilt_image }}
         INPUTS: ${{ toJson(inputs) }}
