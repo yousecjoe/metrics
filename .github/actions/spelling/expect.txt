@@ -13,6 +13,7 @@ audioscrobbler
 Autoloaded
 automator
 backreference
+bitcoin
 Bizau
 blankslate
 blog
@@ -30,12 +31,14 @@ cmake
 codelines
 codemirror
 codeql
+coingecko
 colorsets
 Consolas
 coord
 csso
 CVE
 cwd
+dajneem
 datapoints
 dded
 dependabot
@@ -71,6 +74,7 @@ eqeqeq
 erged
 esm
 eugeneware
+eur
 eviewed
 expr
 expressjs
@@ -153,6 +157,7 @@ isocalendar
 itemprop
 itunes
 jellyfin
+jpy
 jshemas
 kacst
 keyup
@@ -221,6 +226,7 @@ octonaut
 octoraw
 oid
 ommented
+opencontainers
 opengraph
 optimizable
 orked
@@ -335,6 +341,7 @@ urgentlowalert
 uri
 urlencoded
 URLTo
+usd
 usermod
 usernames
 ushed
