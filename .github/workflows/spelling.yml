@@ -54,13 +54,14 @@ jobs:
         suppress_push_for_open_pull_request: 1
         checkout: true
         post_comment: 0
+        dictionary_source_prefixes: '{"cspell": "https://raw.githubusercontent.com/check-spelling/cspell-dicts/f4dfc8661fb8f70eca0009e76dfba18d91bc661a/dictionaries/", "cspell_legacy": "https://raw.githubusercontent.com/check-spelling/cspell-dicts/a73a7f649bdc1caa9f7bffe2c9c62927f9b81e34/dictionaries/"}'
         extra_dictionaries:
-          cspell:html/html.txt
+          cspell_legacy:html/html.txt
           cspell:filetypes/filetypes.txt
-          cspell:css/css.txt
-          cspell:fullstack/fullstack.txt
-          cspell:django/django.txt
-          cspell:npm/npm.txt
+          cspell_legacy:css/css.txt
+          cspell_legacy:fullstack/fullstack.txt
+          cspell_legacy:django/django.txt
+          cspell_legacy:npm/npm.txt
           cspell:aws/aws.txt
         check_extra_dictionaries: ''
 
